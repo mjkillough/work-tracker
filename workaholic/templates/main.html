@@ -1,0 +1,38 @@
+{% load static %}
+
+<html>
+<head>
+    <title>Work Time Tracker</title>
+
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+
+    <script src="{% static 'js/notification-manager.js' %}"></script>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', event => {
+        var notifications = new NotificationManager('{% static 'js/service-worker.js' %}');
+
+
+        notifications.subscription
+            .then(subscription => {
+                if (subscription !== null) {
+                    return subscription;
+                } else {
+                    return notifications.subscribe();
+                }
+            })
+            .then(subscription => {
+                return fetch('/push/subscribe/', {
+                    method: 'POST',
+                    body: JSON.stringify({identifier: subscription.endpoint})
+                });
+            });
+    });
+
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>
