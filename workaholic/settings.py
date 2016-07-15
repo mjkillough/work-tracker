@@ -9,8 +9,11 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'true'
 ALLOWED_HOSTS = []
 
-
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'),)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 ROOT_URLCONF = 'workaholic.urls'
 WSGI_APPLICATION = 'workaholic.wsgi.application'
 
