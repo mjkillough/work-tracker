@@ -13,7 +13,7 @@ from ..json import json_view
 class JsonViewTestCase(django.test.TestCase):
 
     def setUp(self):
-        super(JsonViewTestCase, self).setUp()
+        super().setUp()
         self.factory = django.test.RequestFactory()
         resp = dict(success=True)
         self.dummy_view = unittest.mock.Mock(return_value=resp)
