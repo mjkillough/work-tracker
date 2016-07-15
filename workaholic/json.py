@@ -29,7 +29,7 @@ def json_view(required_parameters=None):
             parameters = []
             json_parameters = {}
             if required_parameters:
-                if request.META['CONTENT_TYPE'] != 'application/json':
+                if request.META.get('CONTENT_TYPE', '') != 'application/json':
                     return HttpResponseBadRequest(json.dumps(dict(
                         success=False, error=_('Expected Content-Type of `application/json`')
                     )))
