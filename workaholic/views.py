@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
@@ -39,3 +40,12 @@ def unsubscribe(request, identifier):
             success=False, error='Subscription does not exist'
         )
     return dict(success=True)
+
+
+@json_view()
+def manifest(request):
+    return dict(
+        shortname='Workaholic',
+        name='Workaholic',
+        gcm_sender_id=settings.GCM_PROJECT_ID,
+    )
