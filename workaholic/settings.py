@@ -22,6 +22,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+GCM_URL = 'https://gcm-http.googleapis.com/gcm/send'
+GCM_CHROME_IDENTIFIER_URL = 'https://android.googleapis.com/gcm/send/' # sent by browsers
+GCM_API_KEY = os.environ['GCM_API_KEY']
+GCM_PROJECT_ID = os.environ['GCM_PROJECT_ID']
+
+
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'workaholic',
