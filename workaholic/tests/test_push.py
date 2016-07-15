@@ -55,6 +55,10 @@ class PushViewTests(django.test.TestCase):
         resp2 = views.unsubscribe(self._post_request(dict(identifier='a')))
         self.assertEqual(models.PushSubscription.objects.count(), 0)
 
+    def test_unsubsribes_does_not_exist(self):
+        resp = views.unsubscribe(self._post_request(dict(identifier='a')))
+        self.assertNotEqual(resp.status_code, 200)
+
     def test_unsubsribes_requires_identifier(self):
         resp = views.unsubscribe(self._post_request(dict()))
         self.assertNotEqual(resp.status_code, 200)
