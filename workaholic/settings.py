@@ -9,7 +9,10 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 DEBUG = os.environ.get('DJANGO_DEBUG') == 'true'
-ALLOWED_HOSTS = ['workaholic.herokuapp.com']
+ALLOWED_HOSTS = [
+    'workaholic.zvxrl.co.uk',
+    'workaholic.herokuapp.com'
+]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
