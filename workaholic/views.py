@@ -39,9 +39,9 @@ def signup(request):
 
             # We must call authenticate(), as login() expects it to set
             # a backend.
-            auth.authenticate(
-                form.cleaned_data['username'],
-                form.cleaned_data['password1']
+            user = auth.authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1']
             )
             auth.login(request, user)
             return redirect_response
