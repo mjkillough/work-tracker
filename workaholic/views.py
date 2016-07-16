@@ -18,6 +18,20 @@ def index(request):
     return render(request, 'main.html')
 
 
+@json_view()
+def manifest(request):
+    """Serves manifest for being a Progress Web App.
+
+    We serve this dynamically so that we can store GCM_PROJECT_ID
+    in one place.
+    """
+    return dict(
+        shortname='Workaholic',
+        name='Workaholic',
+        gcm_sender_id=settings.GCM_PROJECT_ID,
+    )
+
+
 @require_http_methods(['GET', 'POST'])
 def signup(request):
     redirect_field_name = 'next'
@@ -82,12 +96,3 @@ def unsubscribe(request, identifier):
             success=False, error='Subscription does not exist'
         )
     return dict(success=True)
-
-
-@json_view()
-def manifest(request):
-    return dict(
-        shortname='Workaholic',
-        name='Workaholic',
-        gcm_sender_id=settings.GCM_PROJECT_ID,
-    )
