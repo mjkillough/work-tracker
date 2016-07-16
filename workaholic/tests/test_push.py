@@ -5,6 +5,7 @@ import json
 
 import django.test
 from django.conf import settings
+from django.contrib import auth
 
 from .. import views, models
 
@@ -13,23 +14,28 @@ class PushViewTests(django.test.TestCase):
 
     identifier = settings.GCM_CHROME_IDENTIFIER_URL + '/blah'
 
-    @staticmethod
-    def _get_request(data):
-        factory = django.test.RequestFactory()
-        return factory.get(
+    def setUp(self):
+        super().setUp()
+        self.factory = django.test.RequestFactory()
+        self.user = auth.models.User.objects.create_user('username')
+
+    def _get_request(self, data):
+        request = self.factory.get(
             path='',
             data=data,
             content_type='application/json'
         )
+        request.user = self.user
+        return request
 
-    @staticmethod
-    def _post_request(data):
-        factory = django.test.RequestFactory()
-        return factory.post(
+    def _post_request(self, data):
+        request = self.factory.post(
             path='',
             data=json.dumps(data),
             content_type='application/json'
         )
+        request.user = self.user
+        return request
 
     def test_subsribes(self):
         resp = views.subscribe(self._post_request(dict(identifier=self.identifier)))

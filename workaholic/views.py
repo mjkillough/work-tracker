@@ -52,6 +52,7 @@ def signup(request):
     ))
 
 
+@login_required
 @json_view(['identifier'])
 @require_http_methods(['POST'])
 def subscribe(request, identifier):
@@ -65,6 +66,7 @@ def subscribe(request, identifier):
     return dict(success=True)
 
 
+@login_required
 @json_view(['identifier'])
 @require_http_methods(['POST'])
 def unsubscribe(request, identifier):
