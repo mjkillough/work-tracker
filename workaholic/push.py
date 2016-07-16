@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import json
+
 from django.conf import settings
 
 import requests

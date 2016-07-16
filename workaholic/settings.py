@@ -19,6 +19,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+
 ROOT_URLCONF = 'workaholic.urls'
 WSGI_APPLICATION = 'workaholic.wsgi.application'
 
@@ -36,15 +37,28 @@ GCM_API_KEY = os.environ['GCM_API_KEY']
 GCM_PROJECT_ID = os.environ['GCM_PROJECT_ID']
 
 
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.contenttypes',
+
     'workaholic',
 ]
 
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

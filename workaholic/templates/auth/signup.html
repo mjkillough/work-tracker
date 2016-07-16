@@ -1,0 +1,8 @@
+
+
+<form action="{% url 'signup' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="submit" value="Sign up" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>

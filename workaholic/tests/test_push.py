@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import json
+
 import django.test
 from django.conf import settings
 
