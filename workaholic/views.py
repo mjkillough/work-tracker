@@ -62,7 +62,9 @@ def subscribe(request, identifier):
         return http.HttpResponseBadRequest, dict(success=False, error=e.msg)
     # Be nice and allow the client app to tell us about the same
     # subscription more than once.
-    models.PushSubscription.objects.get_or_create(identifier=identifier)
+    models.PushSubscription.objects.get_or_create(
+        user=request.user, identifier=identifier
+    )
     return dict(success=True)
 
 
