@@ -84,3 +84,25 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+        },
+    },
+    'loggers': {
+        'workaholic': {
+            'handlers': ['console'],
+            'level': os.getenv('WORKAHOLIC_LOG_LEVEL', 'DEBUG'),
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'WARNING'),
+        },
+    },
+}
