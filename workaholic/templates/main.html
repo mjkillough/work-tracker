@@ -1,6 +1,6 @@
 {% load static %}
 
-<html>
+<html data-csrf-token="{{ csrf_token }}">
 <head>
     <title>Work Time Tracker</title>
 
@@ -10,8 +10,10 @@
     <script>
 
     document.addEventListener('DOMContentLoaded', event => {
-        var notifications = new NotificationManager('{% static 'js/service-worker.js' %}');
+        const htmlElement = document.getElementsByTagName('html').item(0);
+        const csrfToken = htmlElement.dataset.csrfToken;
 
+        var notifications = new NotificationManager('{% static 'js/service-worker.js' %}');
 
         notifications.subscription
             .then(subscription => {
