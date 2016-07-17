@@ -5,17 +5,21 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django import http
-from django.shortcuts import render, resolve_url
+from django.shortcuts import redirect, render, resolve_url
 from django.utils.http import is_safe_url
 from django.views.decorators.http import require_http_methods
 
-from . import models, push, forms
+from . import models, push, forms, tracker
 from .json import json_view
 
 
 @login_required
 def index(request):
-    return render(request, 'main.html')
+    recent_periods = models.Period.objects.filter(user=request.user).order_by('-id')[:10]
+    return render(request, 'main.html', dict(
+        has_ongoing_period=tracker.has_ongoing_period(request.user),
+        recent_periods=recent_periods,
+    ))
 
 
 @json_view()
@@ -96,3 +100,17 @@ def unsubscribe(request, identifier):
             success=False, error='Subscription does not exist'
         )
     return dict(success=True)
+
+
+@login_required
+@require_http_methods(['POST'])
+def trigger_period_start(request):
+    tracker.start_period(request.user)
+    return redirect('index')
+
+
+@login_required
+@require_http_methods(['POST'])
+def trigger_period_end(request):
+    tracker.end_ongoing_periods(request.user)
+    return redirect('index')

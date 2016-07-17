@@ -26,15 +26,39 @@
             .then(subscription => {
                 return fetch('/push/subscribe/', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    credentials: 'same-origin',
                     body: JSON.stringify({identifier: subscription.endpoint})
                 });
             });
+
     });
 
     </script>
 </head>
 <body>
+
+{% if not has_ongoing_period %}
+<form action="{% url 'start' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Start</button>
+</form>
+{% else %}
+<form action="{% url 'end' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">End</button>
+</form>
+{% endif %}
+
+<table>
+    <tr><td>Start</td><td>End</td>
+    {% for period in recent_periods %}
+    <tr><td>{{ period.start }}</td><td>{{ period.end }}</td></tr>
+    {% endfor %}
+</table>
 
 <form action="{% url 'logout' %}" method="get">
     <button type="submit">Logout</button>
