@@ -61,6 +61,7 @@ class ApiEndpointTestCase(django.test.TestCase):
         decorated_view = decorator(view)
         resp = decorated_view(http.HttpRequest(), '')
         self.assertTrue(isinstance(resp, http.HttpResponseBadRequest))
+        view.assert_not_called()
 
     @unittest.mock.patch.object(
         api, 'get_user_for_api_key',
@@ -73,6 +74,7 @@ class ApiEndpointTestCase(django.test.TestCase):
         decorated_view = decorator(view)
         resp = decorated_view(http.HttpRequest(), '')
         self.assertTrue(isinstance(resp, http.HttpResponseBadRequest))
+        view.assert_not_called()
 
     @unittest.mock.patch.object(
         api, 'get_user_for_api_key',
