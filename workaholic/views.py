@@ -4,21 +4,29 @@
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django import http
 from django.shortcuts import redirect, render, resolve_url
 from django.utils.http import is_safe_url
 from django.views.decorators.http import require_http_methods
 
-from . import models, push, forms, tracker
+from . import models, push, forms, tracker, api
 from .json import json_view
 
 
 @login_required
 def index(request):
     recent_periods = models.Period.objects.filter(user=request.user).order_by('-id')[:10]
+
+    api_key = api.get_api_key_for_user(request.user)
+    api_start_url = reverse('api-start', args=[api_key])
+    api_end_url = reverse('api-end', args=[api_key])
+
     return render(request, 'main.html', dict(
         has_ongoing_period=tracker.has_ongoing_period(request.user),
         recent_periods=recent_periods,
+        api_start_url=api_start_url,
+        api_end_url=api_end_url,
     ))
 
 
@@ -114,3 +122,15 @@ def tracker_start(request):
 def tracker_end(request):
     tracker.end_ongoing_periods(request.user)
     return redirect('index')
+
+
+@api.endpoint
+def api_tracker_start(request):
+    tracker.start_period(request.user)
+    return dict(success=True)
+
+
+@api.endpoint
+def api_tracker_end(request):
+    tracker.end_ongoing_periods(request.user)
+    return dict(success=True)

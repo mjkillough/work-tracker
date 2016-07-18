@@ -19,6 +19,9 @@ urlpatterns = [
     url(r'^tracker/start/$', views.tracker_start, name='start'),
     url(r'^tracker/end/$', views.tracker_start, name='end'),
 
+    url(r'^api/tracker/start/([a-zA-Z0-9\-_:]+)/', views.api_tracker_start, name='api-start'),
+    url(r'^api/tracker/end/([a-zA-Z0-9\-_:]+)/', views.api_tracker_end, name='api-end'),
+
     url('^auth/login/$',
         auth_views.login,
         dict(template_name='auth/login.html'),
