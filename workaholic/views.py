@@ -124,13 +124,13 @@ def tracker_end(request):
     return redirect('index')
 
 
-@api.endpoint
+@api.endpoint()
 def api_tracker_start(request):
     tracker.start_period(request.user)
     return dict(success=True)
 
 
-@api.endpoint
+@api.endpoint()
 def api_tracker_end(request):
     tracker.end_ongoing_periods(request.user)
     return dict(success=True)
