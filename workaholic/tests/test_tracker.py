@@ -75,15 +75,15 @@ class TrackerViewsTestCase(django.test.TestCase):
         self.user = auth.models.User.objects.create_user('username')
 
     def test_start(self):
-        request = self.factory.post(reverse(views.trigger_period_start))
+        request = self.factory.post(reverse('start'))
         request.user = self.user
         with unittest.mock.patch.object(tracker, 'start_period') as mocked:
-            views.trigger_period_start(request)
+            views.tracker_start(request)
         mocked.assert_called_once_with(self.user)
 
     def test_end(self):
-        request = self.factory.post(reverse(views.trigger_period_end))
+        request = self.factory.post(reverse('end'))
         request.user = self.user
         with unittest.mock.patch.object(tracker, 'end_ongoing_periods') as mocked:
-            views.trigger_period_end(request)
+            views.tracker_end(request)
         mocked.assert_called_once_with(self.user)

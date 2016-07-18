@@ -104,13 +104,13 @@ def unsubscribe(request, identifier):
 
 @login_required
 @require_http_methods(['POST'])
-def trigger_period_start(request):
+def tracker_start(request):
     tracker.start_period(request.user)
     return redirect('index')
 
 
 @login_required
 @require_http_methods(['POST'])
-def trigger_period_end(request):
+def tracker_end(request):
     tracker.end_ongoing_periods(request.user)
     return redirect('index')

@@ -5,7 +5,7 @@ import json
 import functools
 
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.utils.translation import gettext as _
+from django.utils.translation import ugettext as _
 
 
 def json_view(required_parameters=None):

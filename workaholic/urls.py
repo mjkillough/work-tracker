@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^push/subscribe/$', views.subscribe, name='subscribe'),
     url(r'^push/unsubscribe/$', views.unsubscribe, name='unsubscribe'),
 
-    url(r'^tracker/start/$', views.trigger_period_start, name='start'),
-    url(r'^tracker/end/$', views.trigger_period_end, name='end'),
+    url(r'^tracker/start/$', views.tracker_start, name='start'),
+    url(r'^tracker/end/$', views.tracker_start, name='end'),
 
     url('^auth/login/$',
         auth_views.login,
